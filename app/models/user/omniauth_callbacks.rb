@@ -52,15 +52,19 @@ class User
             user.tagline  = data["description"]
 
             elsif provider == "wechat"
-              user.name = data["info"]["nickname"]
-              user.login = Homeland::Username.sanitize(data["info"]["nickname"])
-              user.wechat = data["info"]["nickname"]
+              user.name = data["nickname"]
+              if data["nickname"].is_a? String
+                user.login = Homeland::Username.sanitize(data["nickname"])
+              else
+                user.login = ""
+              end
+              user.wechat = data["nickname"]
               if user.login.blank?
                 user.login = "u#{Time.now.to_i}"
               end
 
               user.password = Devise.friendly_token[0, 20]
-              user.location = data["info"]["city"]
+              user.location = data["city"]
           end
         end
       end
