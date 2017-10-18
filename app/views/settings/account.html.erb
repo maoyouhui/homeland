@@ -22,20 +22,36 @@
         <div class="heading">绑定其他帐号用于登录</div>
 
         <% if !Setting.sso_enabled? %>
-          <% if Setting.has_module? :github %>
+
             <ul class="list-group col-sm-6">
-              <% ["github"].each do |provider| %>
-              <li class="list-group-item">
-                <% if @user.bind? provider %>
-                  <%= t("omniauth.#{provider}") %>
-                  <%= link_to(raw('<i class="fa fa-remove"></i>'),"/setting/auth/#{provider}", rel: "twitsy", title: "点击解除绑定", method: 'delete' )%>
-                <% else %>
-                  <%= link_to(t("omniauth.#{provider}"), "/account/auth/#{provider}", rel: "twitsy", title: "点击绑定" )%>
+
+              <% if Setting.has_module? :github %>
+                <% ["github"].each do |provider| %>
+                  <li class="list-group-item">
+                    <% if @user.bind? provider %>
+                      <%= t("omniauth.#{provider}") %>
+                      <%= link_to(raw('<i class="fa fa-remove"></i>'),"/setting/auth/#{provider}", rel: "twitsy", title: "点击解除绑定", method: 'delete' )%>
+                    <% else %>
+                      <%= link_to(t("omniauth.#{provider}"), "/account/auth/#{provider}", rel: "twitsy", title: "点击绑定" )%>
+                    <% end %>
+                  </li>
                 <% end %>
-              </li>
+              <% end %>
+
+              <% if Setting.has_module? :wechat %>
+                <% ["wechat"].each do |provider| %>
+                    <li class="list-group-item">
+                      <% if @user.bind? provider %>
+                          <%= t("omniauth.#{provider}") %>
+                          <%= link_to(raw('<i class="fa fa-remove"></i>'),"/setting/auth/#{provider}", rel: "twitsy", title: "点击解除绑定", method: 'delete' )%>
+                      <% else %>
+                          <%= link_to(t("omniauth.#{provider}"), "/account/auth/#{provider}", rel: "twitsy", title: "点击绑定" )%>
+                      <% end %>
+                    </li>
+                <% end %>
               <% end %>
             </ul>
-          <% end %>
+
         <% end %>
       </div>
     </div>

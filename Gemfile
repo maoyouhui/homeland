@@ -67,6 +67,7 @@ gem 'elasticsearch-rails'
 # 三方平台 OAuth 验证登陆
 gem 'omniauth'
 gem 'omniauth-github'
+gem 'omniauth-wechat-oauth2'
 
 # Permission
 gem 'cancancan'
