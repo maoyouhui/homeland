@@ -3,7 +3,7 @@ class User
     extend ActiveSupport::Concern
 
     module ClassMethods
-      %w(github).each do |provider|
+      %w(github, wechat).each do |provider|
         define_method "find_or_create_for_#{provider}" do |response|
           uid = response["uid"].to_s
           data = response["info"]
@@ -37,6 +37,9 @@ class User
           user.login = Homeland::Username.sanitize(data["nickname"])
           if provider == "github"
             user.github = data["nickname"]
+          end
+          if provider == "wechat"
+            user.wechat = data["nickname"]
           end
 
           if user.login.blank?
