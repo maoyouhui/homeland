@@ -26,33 +26,42 @@ class User
 
       def new_from_provider_data(provider, uid, data)
         User.new do |user|
-          user.email =
-            if data["email"].present? && !User.where(email: data["email"]).exists?
-              data["email"]
-            else
-              "#{provider}+#{uid}@example.com"
+          if provider == "github"
+            user.email =
+                if data["email"].present? && !User.where(email: data["email"]).exists?
+                  data["email"]
+                else
+                  "#{provider}+#{uid}@example.com"
+                end
+
+            user.name = data["name"]
+            user.login = Homeland::Username.sanitize(data["nickname"])
+            user.github = data["nickname"]
+
+
+            if user.login.blank?
+              user.login = "u#{Time.now.to_i}"
             end
 
-          user.name = data["name"]
-          user.login = Homeland::Username.sanitize(data["nickname"])
-          if provider == "github"
-            user.github = data["nickname"]
-          end
-          if provider == "wechat"
-            user.wechat = data["nickname"]
-          end
+            if User.where(login: user.login).exists?
+              user.login = "#{user.github}-github" # TODO: possibly duplicated user login here. What should we do?
+            end
 
-          if user.login.blank?
-            user.login = "u#{Time.now.to_i}"
-          end
+            user.password = Devise.friendly_token[0, 20]
+            user.location = data["location"]
+            user.tagline  = data["description"]
 
-          if User.where(login: user.login).exists?
-            user.login = "#{user.github}-github" # TODO: possibly duplicated user login here. What should we do?
-          end
+            elsif provider == "wechat"
+              user.name = data["info"]["nickname"]
+              user.login = Homeland::Username.sanitize(data["info"]["nickname"])
+              user.wechat = data["info"]["nickname"]
+              if user.login.blank?
+                user.login = "u#{Time.now.to_i}"
+              end
 
-          user.password = Devise.friendly_token[0, 20]
-          user.location = data["location"]
-          user.tagline  = data["description"]
+              user.password = Devise.friendly_token[0, 20]
+              user.location = data["info"]["city"]
+          end
         end
       end
     end
