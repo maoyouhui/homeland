@@ -26,6 +26,8 @@ class User
 
       def new_from_provider_data(provider, uid, data)
         User.new do |user|
+
+
           if provider == "github"
             user.email =
                 if data["email"].present? && !User.where(email: data["email"]).exists?
@@ -51,20 +53,26 @@ class User
             user.location = data["location"]
             user.tagline  = data["description"]
 
-            elsif provider == "wechat"
-              user.name = data["nickname"]
-              if data["nickname"].is_a? String
-                user.login = Homeland::Username.sanitize(data["nickname"])
-              else
-                user.login = ""
-              end
-              user.wechat = data["nickname"]
-              if user.login.blank?
-                user.login = "u#{Time.now.to_i}"
-              end
-
-              user.password = Devise.friendly_token[0, 20]
-              user.location = data["city"]
+          elsif provider == "wechat"
+            user.email =
+                if data["email"].present? && !User.where(email: data["email"]).exists?
+                  data["email"]
+                else
+                  "#{provider}+#{uid}@example.com"
+                end
+            user.name = data["nickname"]
+            if data["nickname"].is_a? String
+              user.login = Homeland::Username.sanitize(data["nickname"])
+            else
+              user.login = ""
+            end
+            user.wechat = data["nickname"]
+            if user.login.blank?
+              user.login = "u#{Time.now.to_i}"
+            end
+            
+            user.password = Devise.friendly_token[0, 20]
+            user.location = data["city"]
           end
         end
       end
