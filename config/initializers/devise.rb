@@ -178,7 +178,7 @@ Devise.setup do |config|
 
   if Setting.has_module? :wechat
     config.omniauth :wechat, Setting.wechat_token, Setting.wechat_secret,
-                    :authorize_params => {:scope => "snsapi_base"}
+                    :authorize_params => {:scope => "snsapi_userinfo"}
   end
   # config.omniauth :open_id, :store => OpenID::Store::Filesystem.new('/tmp'), :name => 'google', :identifier => 'https://www.google.com/accounts/o8/id', :require => 'omniauth-openid'
 
