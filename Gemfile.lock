@@ -80,6 +80,7 @@ GEM
     carrierwave-upyun (0.2.2)
       carrierwave (>= 0.5.7)
       faraday (>= 0.8.0)
+    chinese_pinyin (1.0.1)
     codecov (0.1.10)
       json
       simplecov
@@ -444,6 +445,7 @@ DEPENDENCIES
   carrierwave
   carrierwave-aliyun
   carrierwave-upyun
+  chinese_pinyin
   codecov
   coffee-rails
   dalli

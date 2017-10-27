@@ -61,14 +61,26 @@ class User
                   "#{provider}+#{uid}@example.com"
                 end
             user.name = data["nickname"]
-            if data["nickname"].is_a? String
-              user.login = Homeland::Username.sanitize(data["nickname"])
+            user.wechat = data["nickname"]
+
+            # 处理login的逻辑
+            # 微信用户名到login的处理方式
+            # 1. 去除所有emoji。2. 所有中文全部换成汉语拼音 3. 其他非字母字符都换成下划线 sanitize
+            login_name = data["nickname"]
+            if login_name.is_a? String
+              login_name = Homeland::Username.strip_emoji(login_name)
+              login_name = Pinyin.t(login_name, splitter: '')
+              user.login = Homeland::Username.sanitize(login_name)
             else
               user.login = ""
             end
-            user.wechat = data["nickname"]
+
             if user.login.blank?
               user.login = "u#{Time.now.to_i}"
+            end
+
+            if User.where(login: user.login).exists?
+              user.login = "#{user.wechat}-wechat" # TODO: possibly duplicated user login here. What should we do?
             end
             
             user.password = Devise.friendly_token[0, 20]

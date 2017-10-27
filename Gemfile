@@ -16,6 +16,7 @@ gem 'dropzonejs-rails'
 gem 'rails_autolink'
 
 gem 'sanitize'
+gem 'chinese_pinyin'
 
 gem 'pg'
 gem 'pghero'
