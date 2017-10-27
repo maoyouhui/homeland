@@ -38,17 +38,19 @@
                 <% end %>
               <% end %>
 
-              <% if Setting.has_module? :wechat %>
-                <% ["wechat"].each do |provider| %>
-                    <li class="list-group-item">
-                      <% if @user.bind? provider %>
-                          <%= t("omniauth.#{provider}") %>
-                          <%= link_to(raw('<i class="fa fa-remove"></i>'),"/setting/auth/#{provider}", rel: "twitsy", title: "点击解除绑定", method: 'delete' )%>
-                      <% else %>
-                          <%= link_to(t("omniauth.#{provider}"), "/account/auth/#{provider}", rel: "twitsy", title: "点击绑定" )%>
+              <% if mobile? %>
+                  <% if Setting.has_module? :wechat %>
+                      <% ["wechat"].each do |provider| %>
+                          <li class="list-group-item">
+                            <% if @user.bind? provider %>
+                                <%= t("omniauth.#{provider}") %>
+                                <%= link_to(raw('<i class="fa fa-remove"></i>'),"/setting/auth/#{provider}", rel: "twitsy", title: "点击解除绑定", method: 'delete' )%>
+                            <% else %>
+                                <%= link_to(t("omniauth.#{provider}"), "/account/auth/#{provider}", rel: "twitsy", title: "点击绑定" )%>
+                            <% end %>
+                          </li>
                       <% end %>
-                    </li>
-                <% end %>
+                  <% end %>
               <% end %>
             </ul>
 
