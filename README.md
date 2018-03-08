@@ -11,8 +11,6 @@ Open source discussion website.
 
 ## Development
 
-### Prepare
-
 1. 安装好vagrant
 
 2. 安装虚拟机的中需要的依赖（第一次才运行）
