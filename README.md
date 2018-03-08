@@ -9,6 +9,33 @@ Open source discussion website.
 
 [![Build Status](https://travis-ci.org/ruby-china/homeland.svg?branch=master)](https://travis-ci.org/ruby-china/homeland) [![codecov.io](https://codecov.io/github/ruby-china/homeland/coverage.svg?branch=master)](https://codecov.io/github/ruby-china/homeland?branch=master)
 
+## Development
+
+### Prepare
+
+1. 安装好vagrant
+
+2. 安装虚拟机的中需要的依赖（第一次才运行）
+
+```bash
+$ vagrant up
+$ vagrant ssh
+$ cd /vagrant
+/vagrant $ ./bin/provision.sh 
+/vagrant $ exit
+$ vagrant halt
+```
+
+3. 启动server
+
+```bash
+$ vagrant up
+$ vagrant ssh
+$ cd /vagrant
+/vagrant $ ./bin/setup
+/vagrant $ rails s -b 0.0.0.0
+```
+
 ## Deployment
 
 Please visit https://gethomeland.com get more documents.
