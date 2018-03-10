@@ -9,6 +9,7 @@ class TopicsController < ApplicationController
                                    :unfollow, :action, :ban]
 
   def index
+
     @suggest_topics = []
     if params[:page].to_i <= 1
       @suggest_topics = Topic.without_hide_nodes.suggest.fields_for_list.limit(3)
@@ -28,6 +29,12 @@ class TopicsController < ApplicationController
     if current_user
       @read_topic_ids = current_user.filter_readed_topics(@topics + @suggest_topics)
     end
+
+    # Only show recent
+    @topics = Topic.without_hide_nodes.recent.fields_for_list.includes(:user)
+    @topics = @topics.page(params[:page])
+    @page_title = [t("topics.topic_list.recent"), t("menu.topics")].join(" · ")
+    render action: "index"
   end
 
   def feed
