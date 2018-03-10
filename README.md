@@ -11,28 +11,7 @@ Open source discussion website.
 
 ## Development
 
-1. 安装好vagrant
-
-2. 安装虚拟机的中需要的依赖（第一次才运行）
-
-```bash
-$ vagrant up
-$ vagrant ssh
-$ cd /vagrant
-/vagrant $ ./bin/provision.sh 
-/vagrant $ exit
-$ vagrant halt
-```
-
-3. 启动server
-
-```bash
-$ vagrant up
-$ vagrant ssh
-$ cd /vagrant
-/vagrant $ ./bin/setup
-/vagrant $ rails s -b 0.0.0.0
-```
+[开发环境搭建环境](https://github.com/ruby-china/homeland/blob/master/CONTRIBUTE.md)
 
 ## Deployment
 
