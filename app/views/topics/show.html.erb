@@ -3,7 +3,7 @@
 <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script type="text/javascript">
     var opts = {
-        title: '湖北互联网人才回流第一入口',
+        title: '<%= @topic.title %>',
         desc: '猫友会致力于通过"人才回流，知识回流，创业回流"，来促进武汉的行业环境。目前是影响力最大的湖北籍互联网人才社群，聚集了万余名考虑回流的湖北籍互联网人才。其发起人黄锦曾就职于微软亚洲工程院，现为猫头鹰团队创始人。',
         link: window.location.href,
         imgUrl: 'http://p22t5s3qo.bkt.clouddn.com/maoyouhui/logo.png'
@@ -16,7 +16,7 @@
         data: {url: location.href.split('#').toString()},
         success: function (res) {
             wx.config({
-                debug: true,
+                debug: false,
                 appId: 'wxd29cb41599dd33ad',
                 timestamp: res.timestamp,
                 nonceStr: res.nonceStr,
